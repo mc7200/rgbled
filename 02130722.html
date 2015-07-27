@@ -76,9 +76,9 @@
             <table width="100%" height="94px">
                 <tr align="center">
                     <td valign="middle" align="right"><img src="./image/01-temperature.svg" alt=""></td>
-                    <td valign="middle" align="left"><span>温度</span><br/><span class="tempcls" id="tempid">28℃</span></td>
+                    <td valign="middle" align="left">&nbsp;&nbsp;<span>温度</span><br/>&nbsp;&nbsp;<span class="tempcls" id="tempid">28℃</span></td>
                     <td valign="middle" align="right"><img src="./image/01-humidity.svg" alt=""></td>
-                    <td valign="middle" align="left"><span>湿度</span><br/><span class="humicls" id="humiid">42%</span></td>
+                    <td valign="middle" align="left">&nbsp;&nbsp;<span>湿度</span><br/>&nbsp;&nbsp;<span class="humicls" id="humiid">42%</span></td>
                 </tr>
             </table>
         </div>        
@@ -91,10 +91,10 @@
                 </tr>                
             </table>
         </div>
-        <div class="humihis">
+        <!-- <div class="humihis">
             <div id="device_id"></div>
             <div id="debug"></div>
-        </div>
+        </div> -->
     </div>
 </div>
 <script src="./js/mqttws31.js"></script>
@@ -119,7 +119,7 @@
         // 正常情况下access_token有效期为7200秒，重复获取将导致上次获取的access_token失效
         var access_token = getParameterByName('access_token');
 
-        document.getElementById('device_id').innerHTML = "DeviceID = "+device_id;
+        // document.getElementById('device_id').innerHTML = "DeviceID = "+device_id;
 
         // websocket连接
         // wsbroker:host
@@ -160,16 +160,16 @@
                 console.log("onConnectionLost:"+responseObject.errorMessage);
         }
         // 消息到达
-        var msgindex = 1;
+        // var msgindex = 1;
         var msgjson;
         function onMessageArrived(message) {
             // console.log(message.topic + ': ' +  message.payloadString);
-            if(msgindex > 12 ){
-                msgindex =1;
-                document.getElementById('debug').innerHTML = "";
-            }
-            msgindex++;
-            console.log('设备上报:' +  message.payloadString);
+            // if(msgindex > 12 ){
+            //     msgindex =1;
+            //     document.getElementById('debug').innerHTML = "";
+            // }
+            // msgindex++;
+            // console.log('设备上报:' +  message.payloadString);
             msgjson = $.parseJSON(message.payloadString);
             // console.log('温度 ' +  msgjson.dht11_temperature);
             var tempval = msgjson.dht11_temperature;
@@ -230,26 +230,26 @@
     }
 
     // 日志打印在页面的部分    
-    var i = 0;
-    console.log = (function(old_funct, div_log) {
-        return function(text) {
-            old_funct(text);
-            var p = '';
-            if (i%2 == 0)
-                p = '<p>';
-            else
-                p = '<p class=\'gray\'>';
+    // var i = 0;
+    // console.log = (function(old_funct, div_log) {
+    //     return function(text) {
+    //         old_funct(text);
+    //         var p = '';
+    //         if (i%2 == 0)
+    //             p = '<p>';
+    //         else
+    //             p = '<p class=\'gray\'>';
 
-            if (typeof text === "object")
-                div_log.innerHTML += p + JSON.stringify(text) + '</p>';
-            else
-                div_log.innerHTML += p + text + '</p>';
+    //         if (typeof text === "object")
+    //             div_log.innerHTML += p + JSON.stringify(text) + '</p>';
+    //         else
+    //             div_log.innerHTML += p + text + '</p>';
 
-            div_log.scrollTop = div_log.scrollHeight;
-            i += 1;
-        };
-    } (console.log.bind(console), document.getElementById("debug")));
-    console.error = console.debug = console.info =  console.log;
+    //         div_log.scrollTop = div_log.scrollHeight;
+    //         i += 1;
+    //     };
+    // } (console.log.bind(console), document.getElementById("debug")));
+    // console.error = console.debug = console.info =  console.log;
 
 </script>
 </body>
